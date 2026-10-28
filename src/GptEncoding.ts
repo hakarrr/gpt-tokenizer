@@ -429,13 +429,13 @@ export class GptEncoding {
       yield [chatStartToken]
       const encodedName = nameCache.get(name) ?? this.encode(name)
       nameCache.set(name, encodedName)
-      yield encodedName
+      yield encodedName.slice()
       if (encodedRoleSeparator.length > 0) {
-        yield encodedRoleSeparator
+        yield encodedRoleSeparator.slice()
       }
       yield* this.encodeGenerator(content, encodeOptions)
       yield [chatEndToken]
-      yield encodedMessageSeparator
+      yield encodedMessageSeparator.slice()
     }
 
     // every reply is primed with <|start|>assistant<|message|>
@@ -446,7 +446,7 @@ export class GptEncoding {
       yield* this.encodeGenerator(assistantPrime, encodeOptions)
     }
     if (encodedRoleSeparator.length > 0) {
-      yield encodedRoleSeparator
+      yield encodedRoleSeparator.slice()
     }
   }
 
